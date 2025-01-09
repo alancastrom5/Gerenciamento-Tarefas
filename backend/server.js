@@ -35,19 +35,30 @@ app.post("/tasks", (req, res) => {
 
 // Atualizar tarefa
 app.put("/tasks/:id", (req, res) => {
-  const { id } = req.params;
-  const { title, description, status } = req.body;
-  tasksModel.updateTask(id, { title, description, status }, (err, result) => {
-    if (err) {
-      console.error("Erro ao atualizar tarefa:", err);
-      res.status(500).send("Erro ao atualizar tarefa");
-    } else if (result.affectedRows === 0) {
-      res.status(404).send("Tarefa não encontrada");
-    } else {
-      res.send("Tarefa atualizada com sucesso!");
+    const { id } = req.params;
+    const { title, description, status } = req.body;
+  
+    // Verifique se o id é válido
+    if (!id || isNaN(id)) {
+      return res.status(400).send("ID inválido.");
     }
+  
+    // Verifique se os dados são válidos
+    if (!title || !description || !status) {
+      return res.status(400).send("Os campos título, descrição e status são obrigatórios.");
+    }
+  
+    tasksModel.updateTask(id, { title, description, status }, (err, result) => {
+      if (err) {
+        console.error("Erro ao atualizar tarefa:", err);
+        res.status(500).send("Erro ao atualizar tarefa");
+      } else if (result.affectedRows === 0) {
+        res.status(404).send("Tarefa não encontrada");
+      } else {
+        res.send("Tarefa atualizada com sucesso!");
+      }
+    });
   });
-});
 
 // Excluir tarefa
 app.delete("/tasks/:id", (req, res) => {

@@ -17,15 +17,23 @@ exports.getAllTasks = (callback) => {
     );
   };
   
-  // Atualizar tarefa
-  exports.updateTask = (id, task, callback) => {
-    const { title, description, status } = task;
-    connection.query(
-      "UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ?",
-      [title, description, status, id],
-      callback
-    );
-  };
+
+    // Atualizar tarefa
+    exports.updateTask = (id, task, callback) => {
+        const { title, description, status } = task;
+    
+        // Garantir que o id é um número
+        const taskId = parseInt(id);
+        if (isNaN(taskId)) {
+        return callback(new Error("ID inválido"));
+        }
+    
+        connection.query(
+        "UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ?",
+        [title, description, status, taskId],
+        callback
+        );
+    };
   
   // Excluir tarefa
   exports.deleteTask = (id, callback) => {
