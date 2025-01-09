@@ -17,22 +17,22 @@ exports.getAllTasks = (callback) => {
     );
   };
   
-
     // Atualizar tarefa
-    exports.updateTask = (id, task, callback) => {
-        const { title, description, status } = task;
-    
-        // Garantir que o id é um número
-        const taskId = parseInt(id);
-        if (isNaN(taskId)) {
-        return callback(new Error("ID inválido"));
-        }
-    
-        connection.query(
-        "UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ?",
-        [title, description, status, taskId],
-        callback
-        );
+    const updateTask = () => {
+        console.log('Atualizando tarefa com os seguintes dados:', editingTask);
+        axios.put(`http://localhost:3001/tasks/${editingTask.id}`, editingTask)
+        .then(() => {
+            // Criar uma nova lista de tarefas, substituindo a tarefa atualizada
+            const updatedTasks = tasks.map(task => 
+            task.id === editingTask.id ? { ...task, ...editingTask } : task
+            );
+            setTasks(updatedTasks); // Atualiza o estado com a nova lista de tarefas
+            setEditingTask(null);
+            setNewTask({ title: "", description: "", status: "pendente" });
+        })
+        .catch((error) => {
+            console.error("Erro ao atualizar tarefa:", error);
+        });
     };
   
   // Excluir tarefa

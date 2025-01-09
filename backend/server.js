@@ -1,81 +1,76 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const connection = require("./models/database");
-const tasksModel = require("./models/tasks");
+const express = require('express');
+const bodyParser = require('body-parser');
+const connection = require('./models/database');
+const cors = require('cors');
 
 const app = express();
+const PORT = 3001;
+
+// Middlewares
 app.use(cors());
 app.use(bodyParser.json());
 
-// Listar todas as tarefas
-app.get("/tasks", (req, res) => {
-  tasksModel.getAllTasks((err, results) => {
-    if (err) {
-      console.error("Erro ao listar tarefas:", err);
-      res.status(500).send("Erro ao listar tarefas");
-    } else {
-      res.json(results);
-    }
-  });
-});
+// Rotas
 
-// Criar nova tarefa
-app.post("/tasks", (req, res) => {
+// 1. Criar uma nova tarefa
+app.post('/tasks', (req, res) => {
   const { title, description, status } = req.body;
-  tasksModel.createTask({ title, description, status }, (err, result) => {
+  const sql = 'INSERT INTO tasks (title, description, status) VALUES (?, ?, ?)';
+  connection.query(sql, [title, description, status], (err, result) => {
     if (err) {
-      console.error("Erro ao criar tarefa:", err);
-      res.status(500).send("Erro ao criar tarefa");
+      console.error('Erro ao criar tarefa:', err.message);
+      res.status(500).json({ error: 'Erro ao criar tarefa' });
     } else {
-      res.status(201).send("Tarefa criada com sucesso!");
+      res.status(201).json({ id: result.insertId, title, description, status });
     }
   });
 });
 
-// Atualizar tarefa
-app.put("/tasks/:id", (req, res) => {
+// 2. Listar todas as tarefas
+app.get('/tasks', (req, res) => {
+  const sql = 'SELECT * FROM tasks';
+  connection.query(sql, (err, results) => {
+    if (err) {
+      console.error('Erro ao listar tarefas:', err.message);
+      res.status(500).json({ error: 'Erro ao listar tarefas' });
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+// 3. Atualizar uma tarefa
+app.put('/tasks/:id', (req, res) => {
+    console.log('Recebido para atualizar tarefa:', req.body);
     const { id } = req.params;
     const { title, description, status } = req.body;
-  
-    // Verifique se o id é válido
-    if (!id || isNaN(id)) {
-      return res.status(400).send("ID inválido.");
-    }
-  
-    // Verifique se os dados são válidos
-    if (!title || !description || !status) {
-      return res.status(400).send("Os campos título, descrição e status são obrigatórios.");
-    }
-  
-    tasksModel.updateTask(id, { title, description, status }, (err, result) => {
+    const sql = 'UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ?';
+    connection.query(sql, [title, description, status, id], (err, result) => {
       if (err) {
-        console.error("Erro ao atualizar tarefa:", err);
-        res.status(500).send("Erro ao atualizar tarefa");
-      } else if (result.affectedRows === 0) {
-        res.status(404).send("Tarefa não encontrada");
+        console.error('Erro ao atualizar tarefa:', err.message);
+        res.status(500).json({ error: 'Erro ao atualizar tarefa' });
       } else {
-        res.send("Tarefa atualizada com sucesso!");
+        res.status(200).json({ message: 'Tarefa atualizada com sucesso' });
       }
     });
   });
+  
 
-// Excluir tarefa
-app.delete("/tasks/:id", (req, res) => {
+// 4. Excluir uma tarefa
+app.delete('/tasks/:id', (req, res) => {
   const { id } = req.params;
-  tasksModel.deleteTask(id, (err, result) => {
+  const sql = 'DELETE FROM tasks WHERE id = ?';
+  connection.query(sql, [id], (err, result) => {
     if (err) {
-      console.error("Erro ao excluir tarefa:", err);
-      res.status(500).send("Erro ao excluir tarefa");
-    } else if (result.affectedRows === 0) {
-      res.status(404).send("Tarefa não encontrada");
+      console.error('Erro ao excluir tarefa:', err.message);
+      res.status(500).json({ error: 'Erro ao excluir tarefa' });
     } else {
-      res.send("Tarefa excluída com sucesso!");
+      res.status(200).json({ message: 'Tarefa excluída com sucesso' });
     }
   });
 });
 
-const PORT = 3001;
+// Inicializa o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
