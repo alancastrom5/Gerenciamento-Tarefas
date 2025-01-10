@@ -116,7 +116,7 @@ Exclui uma tarefa existente.
 
 ## Front-end
 
-![alt text](image-2.png)
+![alt text](image.png)
 
 Bem simples de usar, como podemos ver na foto acima.
 
@@ -137,7 +137,7 @@ Durante o desenvolvimento do projeto, algumas decisões técnicas foram tomadas 
 
 
 
-
+ 
 ## Possíveis melhorias futuras
 
 À medida que este projeto continua a crescer, pode haver muitas mudanças e novos recursos no futuro:

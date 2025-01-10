@@ -32,33 +32,45 @@ function App() {
 
   // Atualizar tarefa
   const updateTask = () => {
-    // Log para depuração dos dados antes de enviar
-    console.log('Atualizando tarefa com os seguintes dados:', newTask);
-    
-    // Verificação para garantir que a tarefa tenha um id válido
     if (!editingTask || !editingTask.id) {
       console.error("Erro: A tarefa não tem um id válido.");
       return;
     }
-    
+
     const updatedTask = {
       id: editingTask.id,
-      title: newTask.title, 
+      title: newTask.title,
       description: newTask.description,
-      status: newTask.status
+      status: newTask.status,
     };
 
     axios.put(`http://localhost:3001/tasks/${updatedTask.id}`, updatedTask)
       .then(() => {
-        // Atualiza a lista de tarefas com a tarefa modificada
-        setTasks(tasks.map(task => 
-          task.id === updatedTask.id ? { ...task, title: updatedTask.title, description: updatedTask.description, status: updatedTask.status } : task
+        setTasks(tasks.map(task =>
+          task.id === updatedTask.id
+            ? { ...task, title: updatedTask.title, description: updatedTask.description, status: updatedTask.status }
+            : task
         ));
         setEditingTask(null);
         setNewTask({ title: "", description: "", status: "pendente" });
       })
       .catch((error) => {
         console.error("Erro ao atualizar tarefa:", error);
+      });
+  };
+
+  // Atualizar status da tarefa (concluído/pendente)
+  const toggleStatus = (task) => {
+    const updatedTask = { ...task, status: task.status === "pendente" ? "concluído" : "pendente" };
+
+    axios.put(`http://localhost:3001/tasks/${task.id}`, updatedTask)
+      .then(() => {
+        setTasks(tasks.map(t =>
+          t.id === task.id ? updatedTask : t
+        ));
+      })
+      .catch((error) => {
+        console.error("Erro ao atualizar status da tarefa:", error);
       });
   };
 
@@ -73,13 +85,8 @@ function App() {
       });
   };
 
-  // Função para iniciar a edição de uma tarefa
+  // Iniciar edição da tarefa
   const startEditing = (task) => {
-    console.log('Iniciando edição da tarefa:', task);
-    if (!task.id) {
-      console.error('Erro: A tarefa não tem id.');
-      return;
-    }
     setEditingTask(task);
     setNewTask({ title: task.title, description: task.description, status: task.status });
   };
@@ -92,7 +99,10 @@ function App() {
       <ul className="task-list">
         {tasks.map((task) => (
           <li key={task.id}>
-            {task.title} - {task.status}
+            <strong>{task.title}</strong> - {task.status}
+            <button onClick={() => toggleStatus(task)}>
+              {task.status === "pendente" ? "Concluir" : "Reabrir"}
+            </button>
             <button onClick={() => startEditing(task)}>Editar</button>
             <button onClick={() => deleteTask(task.id)}>Excluir</button>
           </li>
