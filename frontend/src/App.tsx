@@ -2,14 +2,22 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './App.css';
 
-function App() {
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState({ title: "", description: "", status: "pendente" });
-  const [editingTask, setEditingTask] = useState(null);
+// Definição dos tipos
+interface Task {
+  id: number;
+  title: string;
+  description: string;
+  status: "pendente" | "concluído";
+}
+
+const App: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [newTask, setNewTask] = useState<Omit<Task, "id">>({ title: "", description: "", status: "pendente" });
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   // Buscar tarefas do backend
   useEffect(() => {
-    axios.get("http://localhost:3001/tasks")
+    axios.get<Task[]>("http://localhost:3001/tasks")
       .then((response) => {
         setTasks(response.data);
       })
@@ -20,9 +28,9 @@ function App() {
 
   // Criar uma nova tarefa
   const createTask = () => {
-    axios.post("http://localhost:3001/tasks", newTask)
-      .then(() => {
-        setTasks([...tasks, newTask]);
+    axios.post<Task>("http://localhost:3001/tasks", newTask)
+      .then((response) => {
+        setTasks([...tasks, { ...response.data }]);
         setNewTask({ title: "", description: "", status: "pendente" });
       })
       .catch((error) => {
@@ -32,13 +40,13 @@ function App() {
 
   // Atualizar tarefa
   const updateTask = () => {
-    if (!editingTask || !editingTask.id) {
-      console.error("Erro: A tarefa não tem um id válido.");
+    if (!editingTask) {
+      console.error("Erro: A tarefa não está sendo editada.");
       return;
     }
 
-    const updatedTask = {
-      id: editingTask.id,
+    const updatedTask: Task = {
+      ...editingTask,
       title: newTask.title,
       description: newTask.description,
       status: newTask.status,
@@ -48,7 +56,7 @@ function App() {
       .then(() => {
         setTasks(tasks.map(task =>
           task.id === updatedTask.id
-            ? { ...task, title: updatedTask.title, description: updatedTask.description, status: updatedTask.status }
+            ? updatedTask
             : task
         ));
         setEditingTask(null);
@@ -60,22 +68,24 @@ function App() {
   };
 
   // Atualizar status da tarefa (concluído/pendente)
-  const toggleStatus = (task) => {
-    const updatedTask = { ...task, status: task.status === "pendente" ? "concluído" : "pendente" };
-
+  const toggleStatus = (task: Task) => {
+    const updatedTask: Task = {
+      ...task,
+      status: task.status === "pendente" ? "concluído" : "pendente",
+    };
+  
     axios.put(`http://localhost:3001/tasks/${task.id}`, updatedTask)
       .then(() => {
-        setTasks(tasks.map(t =>
-          t.id === task.id ? updatedTask : t
-        ));
+        setTasks(tasks.map(t => (t.id === task.id ? updatedTask : t)));
       })
       .catch((error) => {
         console.error("Erro ao atualizar status da tarefa:", error);
       });
   };
+  
 
   // Excluir tarefa
-  const deleteTask = (id) => {
+  const deleteTask = (id: number) => {
     axios.delete(`http://localhost:3001/tasks/${id}`)
       .then(() => {
         setTasks(tasks.filter(task => task.id !== id));
@@ -86,7 +96,7 @@ function App() {
   };
 
   // Iniciar edição da tarefa
-  const startEditing = (task) => {
+  const startEditing = (task: Task) => {
     setEditingTask(task);
     setNewTask({ title: task.title, description: task.description, status: task.status });
   };
@@ -126,6 +136,6 @@ function App() {
       </button>
     </div>
   );
-}
+};
 
 export default App;

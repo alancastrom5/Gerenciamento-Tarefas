@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    /* Configurações de JSX */
+    "jsx": "react-jsx",                               /* Define como o JSX será tratado (React 17+). */
+
+    /* Configurações de Ambiente e Linguagem */
+    "target": "es2016",                               /* Define a versão do JavaScript a ser gerada. */
+    "module": "esnext",                               /* Define o sistema de módulos. */
+    "lib": ["dom", "dom.iterable", "esnext"],         /* Inclui bibliotecas para navegadores e ESNext. */
+
+    /* Configurações de Caminhos e Resolução */
+    "moduleResolution": "node",                      /* Usa a resolução de módulos do Node.js. */
+    "baseUrl": "./",                                 /* Define a base para resolução de módulos. */
+    "paths": {                                       /* (Opcional) Adiciona atalhos para importações. */
+      "@/*": ["src/*"]
+    },
+
+    /* Configurações de Checagem */
+    "strict": true,                                  /* Habilita todas as opções estritas. */
+    "esModuleInterop": true,                         /* Suporte para CommonJS e ES Modules. */
+    "forceConsistentCasingInFileNames": true,        /* Verifica nomes de arquivos com distinção de maiúsculas/minúsculas. */
+
+    /* Suporte a Depuração */
+    "sourceMap": true,                               /* Gera arquivos .map para depuração. */
+
+    /* Otimizações de Performance */
+    "skipLibCheck": true                             /* Ignora checagem de arquivos .d.ts em bibliotecas. */
+  },
+  "include": ["src"],                                /* Inclui todos os arquivos na pasta src. */
+  "exclude": ["node_modules", "build"],              /* Exclui pastas que não devem ser verificadas. */
+  "compileOnSave": false                             /* Não compila automaticamente ao salvar arquivos. */
+}
