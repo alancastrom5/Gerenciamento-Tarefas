@@ -6,7 +6,7 @@ Este é um projeto de gerenciamento de tarefas desenvolvido com React para a int
 
 - **Frontend**: React
 - **Backend**: API RESTful com Node.js (Express)
-- **Banco de Dados**: (Inserir banco de dados usado, se houver)
+- **Banco de Dados** MYSQL
 
 ## Funcionalidades
 
