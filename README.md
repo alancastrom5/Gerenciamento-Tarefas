@@ -1,10 +1,10 @@
 # Projeto gerenciamento de tarefas
 
-Este é um projeto de gerenciamento de tarefas desenvolvido com React para a interface frontend e uma API backend utilizando um servidor local. Ele permite que os usuários criem, editem, excluam e visualizem tarefas.
+Este é um projeto de gerenciamento de tarefas desenvolvido com React e Typescript para a interface frontend e uma API backend utilizando um servidor local. Ele permite que os usuários criem, editem, excluam e visualizem tarefas.
 
 ## Tecnologias Utilizadas
 
-- **Frontend**: React
+- **Frontend**: React, Typescript.
 - **Backend**: API RESTful com Node.js (Express)
 - **Banco de Dados**: MYSQL
 
