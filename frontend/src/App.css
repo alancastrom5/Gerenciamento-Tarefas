@@ -40,20 +40,37 @@ h1 {
   align-items: center;
 }
 
+/* Estilos para os botões Editar e Excluir */
 button {
   background-color: #4CAF50;
   color: white;
-  padding: 10px 15px;
+  padding: 5px 10px; /* Reduzindo o tamanho do botão */
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
-  font-size: 16px;
+  font-size: 14px; /* Ajustando o tamanho da fonte */
+  margin: 0 5px; /* Adicionando espaço entre os botões */
 }
 
 button:hover {
   background-color: #45a049;
+}
+
+/* Botões de Editar e Excluir com cores distintas */
+button.edit {
+  background-color: #FFA500; /* Cor laranja para o botão de Editar */
+}
+
+button.edit:hover {
+  background-color: #e69500;
+}
+
+button.delete {
+  background-color: #f44336; /* Cor vermelha para o botão de Excluir */
+}
+
+button.delete:hover {
+  background-color: #da190b;
 }
 
 input, textarea {

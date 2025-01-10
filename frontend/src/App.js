@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './App.css'; // Importa o arquivo CSS
+import './App.css';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState({ title: "", description: "", status: "pendente" });
-  const [editingTask, setEditingTask] = useState(null); // Nova variável para controle de edição
+  const [editingTask, setEditingTask] = useState(null);
 
   // Buscar tarefas do backend
   useEffect(() => {
@@ -43,7 +43,7 @@ function App() {
     
     const updatedTask = {
       id: editingTask.id,
-      title: newTask.title,  // Usar os dados mais recentes de newTask
+      title: newTask.title, 
       description: newTask.description,
       status: newTask.status
     };
@@ -75,7 +75,7 @@ function App() {
 
   // Função para iniciar a edição de uma tarefa
   const startEditing = (task) => {
-    console.log('Iniciando edição da tarefa:', task);  // Verifique se o task tem o id correto
+    console.log('Iniciando edição da tarefa:', task);
     if (!task.id) {
       console.error('Erro: A tarefa não tem id.');
       return;
