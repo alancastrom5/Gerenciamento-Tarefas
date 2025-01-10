@@ -116,7 +116,7 @@ Exclui uma tarefa existente.
 
 ## Front-end
 
-![alt text](image-1.png)
+![alt text](image-2.png)
 
 Bem simples de usar, como podemos ver na foto acima.
 
