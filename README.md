@@ -151,9 +151,7 @@ Durante o desenvolvimento do projeto, algumas decisões técnicas foram tomadas 
 
 4. **Testes automatizados**: Introduzir testes automatizados, tanto no frontend quanto no backend, utilizando ferramentas como Jest e Mocha. Isso ajudaria a garantir que a aplicação funcione corretamente em diferentes cenários e mantivesse uma base de código mais confiável.
 
-5. **Usando TypeScript**: Converter o projeto para TypeScript para garantir uma melhor segurança de tipos e ajudar na manutenção do código. TypeScript melhora a legibilidade e facilita o rastreamento de erros no desenvolvimento.
-
-6. **Avisos e notificações**: Implementar um sistema de notificações para alertar os usuários sobre atualizações nas tarefas ou outros eventos importantes no aplicativo.
+5. **Avisos e notificações**: Implementar um sistema de notificações para alertar os usuários sobre atualizações nas tarefas ou outros eventos importantes no aplicativo.
 
 6. **Tela de login**: Implementar uma tela de login para que os usuários possam acessar a aplicação com suas credenciais. Isso seria essencial para a implementação de um sistema de autenticação e permitiria que os usuários tivessem uma experiência mais personalizada e segura ao salvar e gerenciar suas tarefas.
 
