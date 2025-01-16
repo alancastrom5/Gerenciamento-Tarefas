@@ -9,6 +9,14 @@ const connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
+// como configurar o arquivo .env na pasta backend
+
+ // DB_HOST=localhost
+ // DB_PORT=000
+ // DB_USER=root
+ // DB_PASSWORD=usuario
+ // DB_NAME=name_db
+
 connection.connect((err) => {
   if (err) {
     console.error('Erro ao conectar ao MySQL:', err.message);
