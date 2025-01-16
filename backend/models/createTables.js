@@ -1,4 +1,4 @@
-const connection = require('./models/database');
+const connection = require('./database');
 
 const createTasksTable = () => {
   const query = `

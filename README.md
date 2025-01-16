@@ -15,6 +15,33 @@ Este é um projeto de gerenciamento de tarefas desenvolvido com React e Typescri
 - **Excluir Tarefa**: Remova tarefas da lista.
 - **Listar Tarefas**: Veja todas as tarefas cadastradas.
 
+## Banco de dados
+
+Este projeto usa MySQL como banco de dados para manter as informações constantes. MySQL é um sistema de gerenciamento de banco de dados amplamente utilizado com alto desempenho, confiabilidade e facilidade de uso. Ideal para aplicações que exigem consistência e escalabilidade.
+
+### Configuração do Banco de Dados
+
+1. Script de Criação de Tabelas:
+
+- Para configurar o banco de dados, utilizamos o script **createTables.js**, localizado na pasta models
+
+Este script cria automaticamente a tabela necessária para o funcionamento da aplicação, com a seguinte estrutura:
+
+- **id**: Identificador único da tarefa (chave primária).
+- **title**: Título da tarefa.
+- **description**: Descrição da tarefa.
+- **status**: Status da tarefa, podendo ser pendente ou concluído.
+
+### Execução script 
+
+   ```bash
+  cd models
+  node createTables.js
+  ```
+
+
+
+
 ## Instalação e Execução
 
 ### Requisitos
@@ -135,8 +162,12 @@ Durante o desenvolvimento do projeto, algumas decisões técnicas foram tomadas 
 
 5. **Uso do `useEffect`**: o React usa `useEffect` para colocar a tarefa em segundo plano no momento do carregamento da classe (quando o aplicativo é iniciado), garantindo que a lista de tarefas seja aplicada assim que o aplicativo for aberto. Isso torna a integração de dados e backend mais eficiente.
 
+6. **Benefícios do Uso do MySQL**: 
+- Persistência: Os dados permanecem armazenados mesmo após reiniciar a aplicação.
+- Escalabilidade: Pode ser usado para grandes volumes de dados em aplicações de produção.
+- Flexibilidade: Oferece suporte a várias operações relacionais e manipulação de dados complexos.
 
-
+Com o uso do MySQL, garantimos que a aplicação seja mais robusta e preparada para atender a demandas reais de projetos.
  
 ## Possíveis melhorias futuras
 
@@ -144,16 +175,14 @@ Durante o desenvolvimento do projeto, algumas decisões técnicas foram tomadas 
 
 1. **Autenticação de usuário**: Implementar a funcionalidade de login com uma base de token válida (JWT ou OAuth) para que os usuários possam autenticar e registrar suas ações com segurança. Isso torna o aplicativo robusto e confiável para ambientes de produção reais.
 
-2. **Persistência de banco de dados**: Incluir o uso de bancos de dados como MongoDB ou MySQL para permitir operações persistentes. Atualmente, a aplicação depende de um armazenamento na memória, o que não é escalável para grandes aplicações.
-
-3. **Funcionalidade de filtro e classificação**: Adicionar funcionalidades de filtro e classificação para que os usuários possam organizar suas tarefas por data de criação, título ou status. Isso proporcionaria uma experiência de usuário mais intuitiva.
+2. **Funcionalidade de filtro e classificação**: Adicionar funcionalidades de filtro e classificação para que os usuários possam organizar suas tarefas por data de criação, título ou status. Isso proporcionaria uma experiência de usuário mais intuitiva.
 
 
-4. **Testes automatizados**: Introduzir testes automatizados, tanto no frontend quanto no backend, utilizando ferramentas como Jest e Mocha. Isso ajudaria a garantir que a aplicação funcione corretamente em diferentes cenários e mantivesse uma base de código mais confiável.
+3. **Testes automatizados**: Introduzir testes automatizados, tanto no frontend quanto no backend, utilizando ferramentas como Jest e Mocha. Isso ajudaria a garantir que a aplicação funcione corretamente em diferentes cenários e mantivesse uma base de código mais confiável.
 
-5. **Avisos e notificações**: Implementar um sistema de notificações para alertar os usuários sobre atualizações nas tarefas ou outros eventos importantes no aplicativo.
+4. **Avisos e notificações**: Implementar um sistema de notificações para alertar os usuários sobre atualizações nas tarefas ou outros eventos importantes no aplicativo.
 
-6. **Tela de login**: Implementar uma tela de login para que os usuários possam acessar a aplicação com suas credenciais. Isso seria essencial para a implementação de um sistema de autenticação e permitiria que os usuários tivessem uma experiência mais personalizada e segura ao salvar e gerenciar suas tarefas.
+5. **Tela de login**: Implementar uma tela de login para que os usuários possam acessar a aplicação com suas credenciais. Isso seria essencial para a implementação de um sistema de autenticação e permitiria que os usuários tivessem uma experiência mais personalizada e segura ao salvar e gerenciar suas tarefas.
 
 Essas melhorias ajudariam a tornar o sistema mais robusto, seguro e fácil de usar, além de adicionar funcionalidades essenciais para atender a uma base de usuários maior.
 

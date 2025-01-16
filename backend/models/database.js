@@ -1,20 +1,20 @@
 const mysql = require('mysql2');
+require('dotenv').config({ path: './backend/.env' });
 
 const connection = mysql.createConnection({
-  host: 'localhost',        
-  port: 3306,               
-  user: 'root',
-  password: 'alan2468',
-  database: 'gerenciamento_tarefas',
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT, 10),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
-// Verifica a conexão
 connection.connect((err) => {
   if (err) {
-    console.error('Erro de conexão ao MySQL: ' + err.message);
+    console.error('Erro ao conectar ao MySQL:', err.message);
     return;
   }
-  console.log('Conectado ao banco de dados com ID ' + connection.threadId);
+  console.log('Conectado ao banco de dados com sucesso!');
 });
 
 module.exports = connection;
