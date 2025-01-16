@@ -35,7 +35,7 @@ Este script cria automaticamente a tabela necessária para o funcionamento da ap
 ### Execução script 
 
    ```bash
-  cd models
+  cd backend/models
   node createTables.js
   ```
 
